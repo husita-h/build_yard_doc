@@ -29,12 +29,14 @@ stages:
 generate_yard_doc:
   stage: generate_yard_doc
   script:
-    - bundle exec yard
     - git config --global user.email $USER_EMAIL
     - git config --global user.name $USER_NAME
+    - git fetch -p
+    - git checkout main
+    - bundle exec yard
     - git add .
     - git commit -m "$(date "+%Y-%m-%d")"
-    - git push
+    - git push origin main
 
 publish_yard_doc:
   stage: publish_yard_doc
