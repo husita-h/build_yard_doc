@@ -6,19 +6,21 @@ workflow:
 
 variables:
   BUNDLE_PATH: vendor/bundle
+  # Todo: 修正 https://gitlab.com/gitlab-org/gitlab/-/issues/292668
+  USER_EMAIL: example.bot
+  USER_NAME: bot@example.com
 
 cache:
   paths:
     - $BUNDLE_PATH
+    - $USER_EMAIL
+    - $USER_NAME
 
 before_script:
   - bundle update debug
   - bundle install --full-index
-  # - bundle check || bundle install --jobs=4
-  - echo "end bundle install"
   - bundle exec rails db:create db:migrate
-  - echo "end rails db:create db:migrate"
-  - bundle exec rails db:create RAILS_ENV=test
+  - bundle exec rails db:create db:migrate RAILS_ENV=test
 
 stages:
   - generate_yard_doc
@@ -28,6 +30,8 @@ generate_yard_doc:
   stage: generate_yard_doc
   script:
     - bundle exec yard
+    - git config --global user.email $USER_EMAIL
+    - git config --global user.name $USER_NAME
     - git add .
     - git commit -m "$(date "+%Y-%m-%d")"
     - git push
