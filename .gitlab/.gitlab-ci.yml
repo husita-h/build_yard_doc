@@ -25,27 +25,34 @@ before_script:
 stages:
   - generate_yard_doc
   - publish_yard_doc
+  - deploy
 
-generate_yard_doc:
-  stage: generate_yard_doc
-  script:
-    - git config --global user.email $USER_EMAIL
-    - git config --global user.name $USER_NAME
-    - git fetch -p
-    - git checkout main
-    - bundle exec yard
-    - git add .
-    - git commit -m "$(date "+%Y-%m-%d")"
-    - git push origin main
+# generate_yard_doc:
+#   stage: generate_yard_doc
+#   script:
+#     - git config --global user.email $USER_EMAIL
+#     - git config --global user.name $USER_NAME
+#     - git fetch -p
+#     - git checkout main
+#     - bundle exec yard
+#     - git add .
+#     - git commit -m "$(date "+%Y-%m-%d")"
+#     - git push origin main
 
-publish_yard_doc:
-  stage: publish_yard_doc
-  script:
-    - gem install bundler
-    - bundle install
-    - bundle exec jekyll build -d doc
+# publish_yard_doc:
+#   stage: publish_yard_doc
+#   script:
+#     - gem install bundler
+#     - bundle install
+#     - bundle exec jekyll build -d doc
+#   artifacts:
+#     paths:
+#       - doc
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH == "main"
+
+pages:
+  stage: deploy
   artifacts:
     paths:
-      - public
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
+      - doc
