@@ -12,8 +12,12 @@ cache:
     - $BUNDLE_PATH
 
 before_script:
-  - bundle check || bundle install --jobs=4
+  - bundle update debug
+  - bundle install --full-index
+  # - bundle check || bundle install --jobs=4
+  - echo "end bundle install"
   - bundle exec rails db:create db:migrate
+  - echo "end rails db:create db:migrate"
   - bundle exec rails db:create RAILS_ENV=test
 
 stages:
