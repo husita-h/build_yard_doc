@@ -10,7 +10,7 @@ yard_doc:
     USER_EMAIL: yarddoc_test # https://gitlab.com/gitlab-org/gitlab/-/issues/292668
     USER_NAME: yarddoc_test@noreply.gitlab.com
     GITLAB_TOKEN: $PERSONAL_ACCESS_TOKENS # Settings > CI/CD > Variables
-    GITLAB_REPOSITORY: https://gitlab.com/husita-h/practice_yard_doc
+    GITLAB_REPOSITORY: gitlab.com/husita-h/practice_yard_doc.git
     OUTPUT_DIR: yarddocs
   cache:
     paths:
@@ -22,7 +22,7 @@ yard_doc:
     - bundle update debug
     - bundle add yard
     - bundle install
-    - git clone "https//oauth2:"$GITLAB_TOKEN"@$GITLAB_TOKEN" $OUTPUT_DIR --depth 1
+    - git clone https://oauth2:$GITLAB_TOKEN@$GITLAB_REPOSITORY $OUTPUT_DIR --depth 1
   script:
     - mkdir -p $OUTPUT_DIR/pulic
     - bundle exec yard -o $OUTPUT_DIR/public
