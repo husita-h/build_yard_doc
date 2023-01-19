@@ -18,13 +18,13 @@ yard_doc:
   before_script:
     - apt update
     - apt install git -y
-    - mkdir -p $OUTPUT_DIR && mkdir -p $OUTPUT_DIR/pulic
     - bundle config set --local path 'vendor/bundle'
     - bundle update debug
     - bundle add yard
     - bundle install
     - git clone "https//oauth2:"$GITLAB_TOKEN"@$GITLAB_TOKEN" $OUTPUT_DIR --depth 1
   script:
+    - mkdir -p $OUTPUT_DIR/pulic
     - bundle exec yard -o $OUTPUT_DIR/public
     - cd $OUTPUT_DIR
     - >
