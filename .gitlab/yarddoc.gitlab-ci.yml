@@ -1,8 +1,8 @@
 image: ruby:3.2
 
 yard_doc:
-  tags:
-    - yard_doc
+  # tags:
+  #   - yard_doc
   stage: build
   rules:
     - when: manual
