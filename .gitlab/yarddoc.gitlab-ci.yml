@@ -9,8 +9,7 @@ yard_doc:
   variables:
     USER_EMAIL: yarddoc_test # https://gitlab.com/gitlab-org/gitlab/-/issues/292668
     USER_NAME: yarddoc_test@noreply.gitlab.com
-    GITLAB_TOKEN: $PERSONAL_ACCESS_TOKENS # Settings > CI/CD > Variables
-    GITLAB_REPOSITORY: gitlab.com/husita-h/practice_yard_doc.git
+    GITLAB_REPOSITORY_URL: gitlab.com/husita-h/practice_yard_doc.git
     OUTPUT_DIR: yarddocs
   cache:
     paths:
@@ -22,15 +21,15 @@ yard_doc:
     - bundle update debug
     - bundle add yard
     - bundle install
-    - git clone https://oauth2:$GITLAB_TOKEN@$GITLAB_REPOSITORY $OUTPUT_DIR --depth 1
+    - git clone https://oauth2:$PERSONAL_ACCESS_TOKENS@$GITLAB_REPOSITORY_URL $OUTPUT_DIR --depth 1 # $PERSONAL_ACCESS_TOKENS: Settings > CI/CD > Variables
   script:
     - mkdir -p $OUTPUT_DIR/pulic
     - bundle exec yard -o $OUTPUT_DIR/public
     - cd $OUTPUT_DIR
     - >
       if [`git status -z | wc -c` -gt 0] then;
-        git config --global user.email $USER_NAME
-        git config --global user.name $USER_EMAIL
+        git config --global user.name $USER_NAME
+        git config --global user.email $USER_EMAIL
         git add .
         git commit -m "update yard doc"`date +%Y%m%d%H%M%S`
         git push origin main
