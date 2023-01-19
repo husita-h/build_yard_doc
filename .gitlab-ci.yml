@@ -1,0 +1,7 @@
+image: ruby:3.2
+
+stages:
+  - build
+
+include:
+  - local: .gitlab/yarddoc.gitlab-ci.yml

@@ -1,0 +1,3 @@
+[submodule "doc"]
+	path = doc
+	url = https://gitlab.com/husita-h/practice_yard_doc.git
